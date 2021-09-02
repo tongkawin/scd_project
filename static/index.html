@@ -1,0 +1,546 @@
+<!doctype html>
+
+<html lang="en-US">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Skin Cancer Detection</title>
+    <meta name="description" content="final project">
+    <meta name="keywords" content="Skincancer" />
+    <meta name="author" content="Kawin Phonklam">
+
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,500' rel='stylesheet' type='text/css'>
+
+    <link href='http://fonts.googleapis.com/css?family=Lato:300,400' rel='stylesheet' type='text/css'>
+
+
+
+    <link rel="stylesheet" href="inc/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="inc/animations/css/animate.min.css">
+    <link rel="stylesheet" href="inc/font-awesome/css/font-awesome.min.css"> <!-- Font Icons -->
+    <link rel="stylesheet" href="inc/owl-carousel/css/owl.carousel.css">
+    <link rel="stylesheet" href="inc/owl-carousel/css/owl.theme.css">
+
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/mobile.css">
+
+
+    <link rel="stylesheet" href="css/skin/cool-gray.css">
+
+</head>
+
+<body data-spy="scroll" data-target="#main-navbar">
+    <script src="https://unpkg.com/@tensorflow/tfjs"></script>
+    <script src="https://unpkg.com/@tensorflow/tfjs-automl"></script>
+
+    <div class="body">
+
+        <!--========== BEGIN HEADER ==========-->
+        <header id="header" class="header-main">
+
+            <!-- Begin Navbar -->
+            <nav id="main-navbar" class="navbar navbar-default navbar-fixed-top" role="navigation">
+                <!-- Classes: navbar-default, navbar-inverse, navbar-fixed-top, navbar-fixed-bottom, navbar-transparent. Note: If you use non-transparent navbar, set "height: 98px;" to #header -->
+
+                <div class="container">
+
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                            data-target="#bs-example-navbar-collapse-1">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand page-scroll" href="index.html">Skin Cancer Detection</a>
+                    </div>
+
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><a class="page-scroll" href="/index.html">Predictor</a></li>
+                            <li><a class="page-scroll" href="#result-section">Result</a></li>
+                            <li><a class="page-scroll" href="#about-section">About</a></li>
+                            <li><a class="page-scroll" href="#portfolio-section">images</a></li>
+                            <li><a class="page-scroll" href="#contact-section">Contacts</a></li>
+                        </ul>
+                    </div><!-- /.navbar-collapse -->
+                </div><!-- /.container -->
+            </nav>
+            <!-- End Navbar -->
+
+        </header>
+        <!-- ========= END HEADER =========-->
+
+
+
+
+        <!-- Begin text carousel intro section -->
+        <section id="text-carousel-intro-section" class="parallax" data-stellar-background-ratio="0.5"
+            style="background-image: url(img/slider-bg.jpg);">
+
+            <div class="container">
+                <div class="caption text-center text-white" data-stellar-ratio="0.7">
+
+                    <div id="owl-intro-text">
+                        <div class="item">
+                            <h1>Predictor</h1>
+                            <p>Import your image</p>
+                            <div class="extra-space-l"></div>
+                            <a class="btn btn-blank" target="_blank" role="button"> <input type="file"
+                                    id="image-selector"></a>
+                            <a class="btn btn-blank" target="_blank" role="button" id="predict-button">Predict</a>
+                            <div class="extra-space-l"></div>
+                        </div>
+                    </div>
+
+                </div> <!-- /.caption -->
+            </div> <!-- /.container -->
+        </section>
+        <!-- End text carousel intro section -->
+
+        <!-- Begin cta -->
+        <section id="result-section">
+            <div class="cta">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-9">
+                            <div class="page-header-wrapper">
+                                <div class="container">
+                                    <div class="page-header text-center wow fadeInDown" data-wow-delay="0.4s">
+                                        <div class="extra-space-l"></div>
+                                        <h2>Result</h2>
+                                        <div class="devider"></div>
+                                        <p class="subtitle">Result from Predictor</p>   
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <hr style="width:50%;text-align:left;margin-left:0">
+                                    <h4 class="ml-3">Image</h4>
+                                    <img id="selected-image" class="ml-3" width="250" alt="">
+                                </div>
+                                <div class="col-6">
+                                    <hr style="width:50%;text-align:left;margin-left:0">
+                                    <h4 class="ml-3">Predictions</h4>
+                                    <h6 id="label-0"> </h6>
+                                    <h6 id="label-1"> </h6>
+                                    <h6 id="label-2"> </h6>
+                                    <h6 id="label-3"> </h6>
+                                    <h6 id="label-4"> </h6>
+                                    <h6 id="label-5"> </h6>
+                                    <h6 id="label-6"> </h6>
+                                    <hr style="width:50%;text-align:left;margin-left:0">
+                                </div>
+                            </div>
+                        </div>
+                    </div> <!-- /.row -->
+                </div> <!-- /.container -->
+            </div>
+        </section>
+        <!-- End cta -->
+
+
+        <!-- Begin about section -->
+        <section id="about-section" class="page bg-style1">
+            <!-- Begin page header-->
+            <div class="page-header-wrapper">
+                <div class="container">
+                    <div class="page-header text-center wow fadeInUp" data-wow-delay="0.3s">
+                        <h2>About Skin Cancer</h2>
+                        <div class="devider"></div>
+                        <p class="subtitle">Information</p>
+                    </div>
+                </div>
+            </div>
+            <!-- End page header-->
+
+            <!-- Begin rotate box-1 -->
+            <div class="rotate-box-1-wrapper">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-3 col-sm-6">
+                            <a href="#" class="rotate-box-1 square-icon wow zoomIn" data-wow-delay="0.6s">
+                                <div class="rotate-box-info">
+                                    <h4>Melanocytic nevi(nv)</h4>
+                                    <p>A melanocytic nevus (also commonly known as a mole) is a type of melanocytic
+                                        tumor that contains nevus cells.</p>
+                                </div>
+                            </a>
+                        </div>
+
+
+                        <div class="col-md-3 col-sm-6">
+                            <a href="#" class="rotate-box-1 square-icon wow zoomIn" data-wow-delay="0.6s">
+                                <div class="rotate-box-info">
+                                    <h4>Melanoma(mel)</h4>
+                                    <p>Melanoma, the most serious type of skin cancer, develops in the cells
+                                        (melanocytes) that produce melanin -- the pigment that gives your skin its
+                                        color.</p>
+                                </div>
+                            </a>
+                        </div>
+
+
+                        <div class="col-md-3 col-sm-6">
+                            <a href="#" class="rotate-box-1 square-icon wow zoomIn" data-wow-delay="0.6s">
+                                <div class="rotate-box-info">
+                                    <h4>Benign keratosis-like lesions(bkl)</h4>
+                                    <p>eborrheic keratoses are noncancerous (benign) skin growths that some people
+                                        develop as they age</p>
+                                </div>
+                            </a>
+                        </div>
+
+
+                        <div class="col-md-3 col-sm-6">
+                            <a href="#" class="rotate-box-1 square-icon wow zoomIn" data-wow-delay="0.6s">
+                                <div class="rotate-box-info">
+                                    <h4>Basal cell carcinoma(bcc)</h4>
+                                    <p>Basal cell carcinoma (BCC) is the most common form of skin cancer and the most
+                                        frequently occurring form of all cancers.</p>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="col-md-3 col-sm-6">
+                            <a href="#" class="rotate-box-1 square-icon wow zoomIn" data-wow-delay="0.6s">
+                                <div class="rotate-box-info">
+                                    <h4>Actinic keratoses(akiec)</h4>
+                                    <p>Lorem ipsum dolor sit amet set, consectetur utes anet adipisicing elit, sed do
+                                        eiusmod tempor incidist.</p>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="col-md-3 col-sm-6">
+                            <a href="#" class="rotate-box-1 square-icon wow zoomIn" data-wow-delay="0.6s">
+                                <div class="rotate-box-info">
+                                    <h4>Vascular lesion(vasc)</h4>
+                                    <p>Vascular lesions are relatively common abnormalities of the skin and underlying
+                                        tissues, more commonly known as birthmarks.</p>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="col-md-3 col-sm-6">
+                            <a href="#" class="rotate-box-1 square-icon wow zoomIn" data-wow-delay="0.6s">
+                                <div class="rotate-box-info">
+                                    <h4>Dermatofibroma(df)</h4>
+                                    <p>Dermatofibromas (DFs) are common benign cutaneous tumors. Of unknown etiology,
+                                        DFs usually occur as solitary lesions on the extremities.</p>
+                                </div>
+                            </a>
+                        </div>
+
+                    </div> <!-- /.row -->
+                </div> <!-- /.container -->
+            </div>
+            <!-- End rotate box-1 -->
+
+            <div class="extra-space-l"></div>
+
+        </section>
+        <!-- End about section -->
+
+        <!-- Begin Portfolio -->
+        <section id="portfolio-section" class="page bg-style1">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="portfolio">
+                            <!-- Begin page header-->
+                            <div class="page-header-wrapper">
+                                <div class="container">
+                                    <div class="page-header text-center wow fadeInDown" data-wow-delay="0.4s">
+                                        <h2>Image Example</h2>
+                                        <div class="devider"></div>
+                                        <p class="subtitle">Skin Cancer Image</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End page header-->
+                            <div class="portfoloi_content_area" >
+                                <div class="portfolio_content">
+                                    <div class="row"  id="portfolio">
+                                        <div class="col-xs-12 col-sm-4 appsDevelopment">
+                                            <div class="portfolio_single_content">
+                                                <img src="img/test/vasc/1.jpg" alt="title"/>
+                                                <div>
+                                                    <a href="#">vasc</a>
+                                                    <span>1</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-4 GraphicDesign">
+                                            <div class="portfolio_single_content">
+                                                <img src="img/test/vasc/2.jpg" alt="title"/>
+                                                <div>
+                                                    <a href="#">vasc</a>
+                                                    <span>2</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-4 responsive">
+                                            <div class="portfolio_single_content">
+                                                <img src="img/test/vasc/3.jpg" alt="title"/>
+                                                <div>
+                                                    <a href="#">vasc</a>
+                                                    <span>3</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-4 webDesign websites">
+                                            <div class="portfolio_single_content">
+                                                <img src="img/test/bkl/1.jpg" alt="title"/>
+                                                <div>
+                                                    <a href="#">bkl</a>
+                                                    <span>1</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-4 appsDevelopment websites">
+                                            <div class="portfolio_single_content">
+                                                <img src="img/test/bkl/2.jpg" alt="title"/>
+                                                <div>
+                                                    <a href="#">bkl</a>
+                                                    <span>2</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-4 GraphicDesign">
+                                            <div class="portfolio_single_content">
+                                                <img src="img/test/bkl/3.jpg" alt="title"/>
+                                                <div>
+                                                    <a href="#">bkl</a>
+                                                    <span>3</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-4 responsive">
+                                            <div class="portfolio_single_content">
+                                                <img src="img/test/bcc/1.jpg" alt="title"/>
+                                                <div>
+                                                    <a href="#">bcc</a>
+                                                    <span>1</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-4 GraphicDesign">
+                                            <div class="portfolio_single_content">
+                                                <img src="img/test/bcc/2.jpg" alt="title"/>
+                                                <div>
+                                                    <a href="#">bcc</a>
+                                                    <span>2</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-4 websites">
+                                            <div class="portfolio_single_content">
+                                                <img src="img/test/bcc/3.jpg" alt="title"/>
+                                                <div>
+                                                    <a href="#">bcc</a>
+                                                    <span>3</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-4 websites">
+                                            <div class="portfolio_single_content">
+                                                <img src="img/test/df/1.jpg" alt="title"/>
+                                                <div>
+                                                    <a href="#">df</a>
+                                                    <span>1</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-4 websites">
+                                            <div class="portfolio_single_content">
+                                                <img src="img/test/df/2.jpg" alt="title"/>
+                                                <div>
+                                                    <a href="#">df</a>
+                                                    <span>2</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-4 websites">
+                                            <div class="portfolio_single_content">
+                                                <img src="img/test/df/3.jpg" alt="title"/>
+                                                <div>
+                                                    <a href="#">df</a>
+                                                    <span>3</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-4 websites">
+                                            <div class="portfolio_single_content">
+                                                <img src="img/test/mel/1.jpg" alt="title"/>
+                                                <div>
+                                                    <a href="#">mel</a>
+                                                    <span>1</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-4 websites">
+                                            <div class="portfolio_single_content">
+                                                <img src="img/test/mel/2.jpg" alt="title"/>
+                                                <div>
+                                                    <a href="#">mel</a>
+                                                    <span>2</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-4 websites">
+                                            <div class="portfolio_single_content">
+                                                <img src="img/test/mel/3.jpg" alt="title"/>
+                                                <div>
+                                                    <a href="#">mel</a>
+                                                    <span>3</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-4 websites">
+                                            <div class="portfolio_single_content">
+                                                <img src="img/test/nv/1.jpg" alt="title"/>
+                                                <div>
+                                                    <a href="#">nv</a>
+                                                    <span>1</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-4 websites">
+                                            <div class="portfolio_single_content">
+                                                <img src="img/test/nv/2.jpg" alt="title"/>
+                                                <div>
+                                                    <a href="#">nv</a>
+                                                    <span>2</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-4 websites">
+                                            <div class="portfolio_single_content">
+                                                <img src="img/test/nv/3.jpg" alt="title"/>
+                                                <div>
+                                                    <a href="#">nv</a>
+                                                    <span>3</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-4 websites">
+                                            <div class="portfolio_single_content">
+                                                <img src="img/test/akiec/1.jpg" alt="title"/>
+                                                <div>
+                                                    <a href="#">akiec</a>
+                                                    <span>1</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-4 websites">
+                                            <div class="portfolio_single_content">
+                                                <img src="img/test/akiec/2.jpg" alt="title"/>
+                                                <div>
+                                                    <a href="#">akiec</a>
+                                                    <span>2</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-4 websites">
+                                            <div class="portfolio_single_content">
+                                                <img src="img/test/akiec/3.jpg" alt="title"/>
+                                                <div>
+                                                    <a href="#">akiec</a>
+                                                    <span>3</span>
+                                                </div>
+                                            </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- End portfolio -->
+
+        <!-- Begin contact section -->
+        <section id="contact-section" class="page text-white parallax" data-stellar-background-ratio="0.5"
+            style="background-image: url(img/map-bg.jpg);">
+            <div class="cover"></div>
+
+            <!-- Begin page header-->
+            <div class="page-header-wrapper">
+                <div class="container">
+                    <div class="page-header text-center wow fadeInDown" data-wow-delay="0.4s">
+                        <h2>Contacts</h2>
+                        <div class="devider"></div>
+                        <p class="subtitle">All to contact me</p>
+                    </div>
+                </div>
+            </div>
+            <!-- End page header-->
+
+            <div class="contact wow bounceInRight" data-wow-delay="0.4s">
+                <div class="container">
+                    <div class="row">
+
+                        <div class="col-sm-6">
+                            <div class="contact-info">
+                                <h4>Our Address</h4>
+                                <ul class="contact-address">
+                                    <li>Tel : +6699 - 3950772 </li>
+                                    <li>Email : kawin.ph@wu.ac.th</li>
+                                    <li>Facebook : Kawin Phonklam</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                    </div> <!-- /.row -->
+                </div> <!-- /.container -->
+            </div>
+        </section>
+        <!-- End contact section -->
+
+        <a href="#" class="scrolltotop"><i class="fa fa-arrow-up"></i></a> <!-- Scroll to top button -->
+
+    </div><!-- body ends -->
+
+    <!-- Plugins JS -->
+    <script src="inc/jquery/jquery-1.11.1.min.js"></script>
+    <script src="inc/bootstrap/js/bootstrap.min.js"></script>
+    <script src="inc/owl-carousel/js/owl.carousel.min.js"></script>
+    <script src="inc/stellar/js/jquery.stellar.min.js"></script>
+    <script src="inc/animations/js/wow.min.js"></script>
+    <script src="inc/waypoints.min.js"></script>
+    <script src="inc/isotope.pkgd.min.js"></script>
+    <script src="inc/classie.js"></script>
+    <script src="inc/jquery.easing.min.js"></script>
+    <script src="inc/jquery.counterup.min.js"></script>
+    <script src="inc/smoothscroll.js"></script>
+
+    <!-- Theme JS -->
+    <script src="js/theme.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+
+    <script src="index.js"></script>
+
+</body>
+
+</html>
